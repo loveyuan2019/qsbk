@@ -12,7 +12,9 @@ class QsbkSpiderSpider(scrapy.Spider):
         duanzidivs=response.xpath(r"//div[@class='col1 old-style-col1']/div")
         for duanzidiv in duanzidivs:
             author=duanzidiv.xpath(r".//a[2]/h2/text()").get()
+            author="".join(author).strip() #去掉空格
             content=duanzidiv.xpath(r".//div[@class='content']/span/text()").getall()
+            content="".join(content).strip() #去掉空格
             item=QsbkItem(author=author,content=content)
             yield item
         next_url=response.xpath(r"//ul[@class='pagination']/li[last()]/a/@href").get()
